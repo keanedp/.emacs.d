@@ -11,5 +11,10 @@ Emacs setup with evil mode and clojure support
 * recentf
 * rainbow-delimiters
 * clojure-mode-extra-font-locking
+* web-mode
+* emmet-mode
+* company
+* company-web
+
 
 Originally started from [Clojure for the Brave and True](https://www.braveclojure.com/basic-emacs/)
