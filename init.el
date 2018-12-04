@@ -120,8 +120,8 @@
   (setq parinfer-auto-switch-indent-mode nil)
   :init
   (progn
-     (setq parinfer-extensions
-       '(defaults       ; should be included.
+    (setq parinfer-extensions
+      '(defaults       ; should be included.
          pretty-parens  ; different paren styles for different modes.
          evil           ; If you use Evil.
          ;;lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
@@ -134,6 +134,24 @@
     (add-hook 'scheme-mode-hook #'parinfer-mode)
     ;;(add-hook 'cider-repl-mode-hook #'parinfer-mode)
     (add-hook 'lisp-mode-hook #'parinfer-mode)))
+
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :config
+  (which-key-setup-side-window-right-bottom)
+  (setq which-key-sort-order 'which-key-key-order-alpha)
+  (setq which-key-side-window-max-width 0.33)
+  (setq which-key-idle-delay 0.05)
+  :init
+  (which-key-mode))
+
+(use-package sublime-themes
+    :ensure t)
+
+(use-package spacemacs-theme
+  :ensure t
+  :defer t)
 
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
@@ -153,6 +171,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
