@@ -1,7 +1,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
+             '("gnu" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives
