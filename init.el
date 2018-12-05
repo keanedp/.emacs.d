@@ -24,18 +24,18 @@
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package))
+  (package-install 'use-package))`
 
 (eval-when-compile
   (require 'use-package))
 
 ;; this adds 1s to start time
-(use-package exec-path-from-shell
-  :ensure t
-  :defer t
-  :init
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)))
+;; (use-package exec-path-from-shell
+;;   :ensure t
+;;   :defer t
+;;   :init
+;;   (when (memq window-system '(mac ns))
+;;     (exec-path-from-shell-initialize)))
 
 (use-package evil
   :ensure t
