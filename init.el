@@ -1,3 +1,16 @@
+;; change garbage collection threshold to 100MB
+(setq gc-cons-threshold 100000000)
+
+;; increase garbage collection threshold while in minibuffer
+(defun my-minibuffer-setup-hook ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun my-minibuffer-exit-hook ()
+  (setq gc-cons-threshold 800000))
+
+(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
@@ -16,13 +29,13 @@
 (eval-when-compile
   (require 'use-package))
 
+;; this adds 1s to start time
 (use-package exec-path-from-shell
   :ensure t
+  :defer t
   :init
   (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-envs
-     '("PATH"))))
+    (exec-path-from-shell-initialize)))
 
 (use-package evil
   :ensure t
@@ -49,22 +62,24 @@
   (projectile-mode))
 
 (use-package recentf
-    :config
-    (setq recentf-save-file (concat user-emacs-directory ".recentf"))
-    (require 'recentf)
-    (recentf-mode 1)
-    (setq recentf-max-menu-items 40)
-    (global-set-key "\C-x\ \C-r" 'recentf-open-files))
+  :config
+  (setq recentf-save-file (concat user-emacs-directory ".recentf"))
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 40)
+  (global-set-key "\C-x\ \C-r" 'recentf-open-files))
 
 (use-package rainbow-delimiters
   :ensure t
   :defer t)
 
 (use-package clojure-mode-extra-font-locking
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package clojure-mode
   :ensure t
+  :defer t
   :config
   ;(add-hook 'clojure-mode-hook 'enable-paredit-mode)
   (add-hook 'clojure-mode-hook 'subword-mode)
@@ -84,6 +99,7 @@
 
 (use-package cider
   :ensure t
+  :defer t
   :config
   (add-hook 'cider-mode-hook 'eldoc-mode)
   (setq cider-repl-pop-to-buffer-on-connect t)
@@ -106,6 +122,7 @@
   (global-company-mode))
 
 (use-package company-web
+  :defer t
   :ensure t)
 
 ;; auto complete html with C-j
@@ -134,6 +151,7 @@
 
 (use-package parinfer
   :ensure t
+  :defer t
   :bind
   (:map parinfer-mode-map
         ("<tab>" . parinfer-smart-tab:dwim-right)
@@ -174,7 +192,8 @@
   (which-key-mode))
 
 (use-package sublime-themes
-    :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package spacemacs-theme
   :ensure t
