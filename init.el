@@ -177,6 +177,9 @@
             (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
             (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
 
+            (define-key smartparens-mode-map (kbd "M-(") 'sp-wrap-round)
+            (define-key smartparens-mode-map (kbd "M-[") 'sp-wrap-square)
+            (define-key smartparens-mode-map (kbd "M-{") 'sp-wrap-curly)
             (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
             (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
