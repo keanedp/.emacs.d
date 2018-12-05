@@ -22,7 +22,7 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'spacemacs-dark t)
+(load-theme 'doom-city-lights t)
 
 (set-default-font "Consolas")
 

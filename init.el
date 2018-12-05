@@ -32,13 +32,13 @@
   (require 'use-package))
 
 ;; this adds 1s to start time
-;; (use-package exec-path-from-shell
-;;   :ensure t
-;;   :defer t
-;;   :init
-;;   (when (memq window-system '(mac ns))
-;;     (exec-path-from-shell-initialize)
-;;     (exec-path-from-shell-copy-env "PATH")))
+(use-package exec-path-from-shell
+  :ensure t
+  :defer t
+  :init
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)
+    (exec-path-from-shell-copy-env "PATH")))
 
 ;; (use-package evil
 ;;   :ensure t
@@ -256,6 +256,10 @@
   :defer t)
 
 (use-package spacemacs-theme
+  :ensure t
+  :defer t)
+
+(use-package doom-themes
   :ensure t
   :defer t)
 
