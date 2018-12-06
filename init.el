@@ -56,6 +56,14 @@
   (ido-ubiquitous-mode t)
   (ido-everywhere t))
 
+(use-package smex
+  :ensure t
+  :config
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  ;; This is your old M-x.
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+
 (use-package ripgrep
   :ensure t
   :defer t)
@@ -244,7 +252,8 @@
   :ensure t
   :diminish which-key-mode
   :config
-  (which-key-setup-side-window-right-bottom)
+  ;;(which-key-setup-side-window-right-bottom)
+  (which-key-setup-side-window-bottom)
   (setq which-key-sort-order 'which-key-key-order-alpha)
   (setq which-key-side-window-max-width 0.33)
   (setq which-key-idle-delay 0.05)
