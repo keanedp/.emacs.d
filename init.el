@@ -37,7 +37,7 @@
   :defer t
   :init
   (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)
+    ;;(exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-env "PATH")))
 
 ;; (use-package evil
@@ -113,16 +113,21 @@
   :ensure t
   :defer t
   :config
+  ;;(setq cider-auto-mode nil)
   (add-hook 'cider-mode-hook 'eldoc-mode)
-  (setq cider-repl-pop-to-buffer-on-connect t)
-  (setq cider-show-error-buffer t)
+  (setq cider-repl-pop-to-buffer-on-connect nil)
+  ;;(setq cider-show-error-buffer nil)
+  (setq cider-stacktrace-suppressed-errors t)
+  ;;(setq cider-show-error-buffer 'only-in-repl)
   (setq cider-auto-select-error-buffer t)
   (setq cider-repl-history-file "~/.emacs.d/cider-history")
   (setq cider-repl-wrap-history t)
-  (add-hook 'cider-repl-mode-hook 'parinfer-mode)
+  (setq cider-repl-use-pretty-print t)
+  ;;(add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode)))
 
 (use-package company
@@ -277,6 +282,11 @@
 (load "ui.el")
 (load "keybindings.el")
 (load "files.el")
+
+;; (setq cider-cljs-lein-repl
+;;   "(do (require 'figwheel-sidecar.repl-api)
+;;        (figwheel-sidecar.repl-api/start-figwheel!)
+;;        (figwheel-sidecar.repl-api/cljs-repl))")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
