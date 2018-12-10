@@ -265,6 +265,11 @@
   :init
   (which-key-mode))
 
+(use-package org
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+
 (use-package sublime-themes
   :ensure t
   :defer t)
