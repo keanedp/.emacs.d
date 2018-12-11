@@ -113,7 +113,6 @@
   :ensure t
   :defer t
   :config
-  ;;(setq cider-auto-mode nil)
   (add-hook 'cider-mode-hook 'eldoc-mode)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   ;;(setq cider-show-error-buffer nil)
@@ -288,34 +287,26 @@
 (load "keybindings.el")
 (load "files.el")
 
+(defun perform-sql-connect (product connection)
+  ;; remember to set the sql-product, otherwise, it will fail for the first time
+  ;; you call the function
+  (setq sql-product product)
+  (sql-connect connection))
+
+(add-to-list 'load-path "~/.emacs.d/config")
+(if (file-exists-p "~/.emacs.d/config/sql-connections.el")
+    (load "sql-connections.el"))
+
 ;; (setq cider-cljs-lein-repl
 ;;   "(do (require 'figwheel-sidecar.repl-api)
 ;;        (figwheel-sidecar.repl-api/start-figwheel!)
 ;;        (figwheel-sidecar.repl-api/cljs-repl))")
 
-(custom-set-variables
+;;(custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (evil use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+;; '(package-selected-packages (quote (evil use-package))))
+;;(custom-set-faces)
+ 
