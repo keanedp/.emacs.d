@@ -302,34 +302,13 @@
   (setq sql-product product)
   (sql-connect connection))
 
-(add-to-list 'load-path "~/.emacs.d/config")
-(if (file-exists-p "~/.emacs.d/config/sql-connections.el")
-    (load "sql-connections.el"))
+(setq sql-connections-file (expand-file-name "sql-connections.el" (concat user-emacs-directory "config")))
+(load sql-connections-file 'noerror)
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
 
 ;; (setq cider-cljs-lein-repl
 ;;   "(do (require 'figwheel-sidecar.repl-api)
 ;;        (figwheel-sidecar.repl-api/start-figwheel!)
 ;;        (figwheel-sidecar.repl-api/cljs-repl))")
-
-;;(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-;; '(package-selected-packages (quote (evil use-package))))
-;;(custom-set-faces)
- 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (markdown which-key web-mode use-package sublime-themes spacemacs-theme smex ripgrep rg rainbow-delimiters projectile parinfer paredit indent-guide ido-completing-read+ exec-path-from-shell evil-smartparens emmet-mode doom-themes company-web clojure-mode-extra-font-locking cider))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
