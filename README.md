@@ -1,11 +1,10 @@
 # Emacs Config
 
-Emacs setup with evil mode and clojure support
+Emacs setup with clojure support
 
-* evil
 * clojure
 * cider
-* parinfer
+* smartparens
 * ido
 * projectile
 * recentf
@@ -15,6 +14,7 @@ Emacs setup with evil mode and clojure support
 * emmet-mode
 * company
 * company-web
+* markdown
 
 
 Originally started from [Clojure for the Brave and True](https://www.braveclojure.com/basic-emacs/)
