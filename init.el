@@ -286,6 +286,10 @@
   :ensure t
   :defer t)
 
+(use-package oceanic-theme
+  :ensure t
+  :defer t)
+
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
 (load "ui.el")

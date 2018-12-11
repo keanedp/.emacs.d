@@ -1,5 +1,6 @@
-;; set initial size
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 130) (height . 60)))
+;; Launch emacs in fullscreen
+(setq initial-frame-alist '((fullscreen . maximized)))
+;;(setq initial-frame-alist '((top . 0) (left . 0) (width . 130) (height . 60)))
 
 ;; hide welcome screen
 (setq inhibit-startup-screen t)
@@ -27,16 +28,7 @@
 (set-default-font "Consolas")
 
 ;; increase font size for better readability
-(set-face-attribute 'default nil :height 135)
-
-;; Uncomment the lines below by removing semicolons and play with the
-;; values in order to set the width (in characters wide) and height
-;; (in lines high) Emacs will have whenever you start it
-;;(setq initial-frame-alist '((top . 0) (left . 0) (width . 160) (height . 60)))
-
-;; Launch emacs in fullscreen
-(setq initial-frame-alist '((fullscreen . maximized)))
-
+(set-face-attribute 'default nil :height 135 :weight 'light)
 ;; These settings relate to how emacs interacts with your operating system
 (setq ;; makes killing/yanking interact with the clipboard
  x-select-enable-clipboard t
@@ -57,8 +49,8 @@
  ;; Mouse yank commands yank at point instead of at click.
  mouse-yank-at-point t)
 
-;; No cursor blinking, it's distracting
-(blink-cursor-mode 1)
+;; Whether cursor blinks
+(blink-cursor-mode t)
 
 ;; full path in title bar
 (setq-default frame-title-format "%b (%f)")
