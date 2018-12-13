@@ -1,3 +1,6 @@
+;; deleted  active region with backspace or inserting text
+(delete-selection-mode 1)
+
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
 

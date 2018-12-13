@@ -31,19 +31,14 @@
 (eval-when-compile
   (require 'use-package))
 
-;; this adds 1s to start time
+;; set env when launched as gui app
 (use-package exec-path-from-shell
   :ensure t
   :defer t
   :init
   (when (memq window-system '(mac ns))
-    ;;(exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-env "PATH")))
-
-;; (use-package evil
-;;   :ensure t
-;;   :init
-;;   (evil-mode 1))
+    (setq exec-path-from-shell-arguments nil)
+    (exec-path-from-shell-initialize)))
 
 (use-package ido-completing-read+
   :ensure t
@@ -67,6 +62,9 @@
 (use-package ripgrep
   :ensure t
   :defer t)
+
+;; research wgrep for better refacting
+;;(require 'wgrep)
 
 (use-package projectile
   :ensure t
