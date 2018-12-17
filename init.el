@@ -22,7 +22,10 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-(package-initialize)
+;; version 27 is calling package-initialize by default as of 12/17/2018
+;; see for details: https://github.com/jkitchin/scimax/issues/194
+(if (version<= emacs-version "27")
+  (package-initialize))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -150,7 +153,6 @@
 
 (use-package web-mode
   :ensure t
-  :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
