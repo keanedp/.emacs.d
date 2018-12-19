@@ -94,21 +94,20 @@
   :ensure t
   :defer t
   :config
-  ;(add-hook 'clojure-mode-hook 'enable-paredit-mode)
   (add-hook 'clojure-mode-hook 'subword-mode)
   (require 'clojure-mode-extra-font-locking)
   (add-hook 'clojure-mode-hook
-          (lambda ()
-            (setq inferior-lisp-program "lein repl")
-            (font-lock-add-keywords
-             nil
-             '(("(\\(facts?\\)"
-                (1 font-lock-keyword-face))
-               ("(\\(background?\\)"
-                (1 font-lock-keyword-face))))
-            (define-clojure-indent (fact 1))
-            (define-clojure-indent (facts 1))
-            (rainbow-delimiters-mode))))
+            (lambda ()
+              (setq inferior-lisp-program "lein repl")
+              (font-lock-add-keywords
+               nil
+               '(("(\\(facts?\\)"
+                  (1 font-lock-keyword-face))
+                 ("(\\(background?\\)"
+                  (1 font-lock-keyword-face))))
+              (define-clojure-indent (fact 1))
+              (define-clojure-indent (facts 1))
+              (rainbow-delimiters-mode))))
 
 (use-package cider
   :ensure t
@@ -132,6 +131,9 @@
 
 (use-package company
   :ensure t
+  :config
+  (setq company-dabbrev-downcase 0)
+  (setq company-idle-delay 0.2)
   :init
   (global-company-mode))
 
@@ -216,42 +218,9 @@
             (define-key smartparens-mode-map (kbd "C-\"") 'sp-change-inner)
             (define-key smartparens-mode-map (kbd "M-i") 'sp-change-enclosing))
 
-;; (use-package rainbow-delimiters
-;;   :ensure t
-;;   :defer t)
-
-;; (use-package parinfer
-;;   :ensure t
-;;   :defer t
-;;   :bind
-;;   (:map parinfer-mode-map
-;;         ("<tab>" . parinfer-smart-tab:dwim-right)
-;;         ("S-<tab>" . parinfer-smart-tab:dwim-left)
-;;         ("C-i" . parinfer--reindent-sexp)
-;;         ("C-M-i" . parinfer-auto-fix)
-;;         ("C-," . parinfer-toggle-mode)
-;;         :map parinfer-region-mode-map
-;;         ("C-i" . indent-for-tab-command)
-;;         ("<tab>" . parinfer-smart-tab:dwim-right)
-;;         ("S-<tab>" . parinfer-smart-tab:dwim-left))
-;;   :config
-;;   (setq parinfer-auto-switch-indent-mode nil)
-;;   :init
-;;   (progn
-;;     (setq parinfer-extensions
-;;       '(defaults       ; should be included.
-;;          pretty-parens  ; different paren styles for different modes.
-;;          ;;evil           ; If you use Evil.
-;;          ;;lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
-;;          ;;paredit        ; Introduce some paredit commands.
-;;          smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-;;          smart-yank))   ; Yank behavior depend on mode.
-;;     (add-hook 'clojure-mode-hook #'parinfer-mode)
-;;     (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-;;     (add-hook 'common-lisp-mode-hook #'parinfer-mode)
-;;     (add-hook 'scheme-mode-hook #'parinfer-mode)
-;;     ;;(add-hook 'cider-repl-mode-hook #'parinfer-mode)
-;;     (add-hook 'lisp-mode-hook #'parinfer-mode)))
+(use-package aggressive-indent
+  :ensure t
+  :hook ((clojure-mode emacs-lisp-mode css-mode) . aggressive-indent-mode))
 
 (use-package which-key
   :ensure t
