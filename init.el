@@ -72,7 +72,6 @@
 (use-package projectile
   :ensure t
   :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-p") 'projectile-ripgrep)
   :init
@@ -118,6 +117,7 @@
   ;;(setq cider-show-error-buffer nil)
   (setq cider-stacktrace-suppressed-errors t)
   ;;(setq cider-show-error-buffer 'only-in-repl)
+  (setq cider-default-cljs-repl 'figwheel)
   (setq cider-auto-select-error-buffer t)
   (setq cider-repl-history-file "~/.emacs.d/cider-history")
   (setq cider-repl-wrap-history t)
@@ -173,7 +173,7 @@
             ;; highlight matching pairs
             (show-smartparens-global-mode t)
             (add-hook 'clojure-mode-hook 'smartparens-strict-mode)
-            (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode))
+            (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
             (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
             (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
 
@@ -216,11 +216,12 @@
             (define-key smartparens-mode-map (kbd "M-B") 'sp-backward-symbol)
 
             (define-key smartparens-mode-map (kbd "C-\"") 'sp-change-inner)
-            (define-key smartparens-mode-map (kbd "M-i") 'sp-change-enclosing))
+            (define-key smartparens-mode-map (kbd "M-i") 'sp-change-enclosing)))
 
-(use-package aggressive-indent
-  :ensure t
-  :hook ((clojure-mode emacs-lisp-mode css-mode) . aggressive-indent-mode))
+;; (use-package aggressive-indent
+;;   :ensure t
+;;   :defer t
+;;   :hook ((clojure-mode emacs-lisp-mode css-mode) . aggressive-indent-mode))
 
 (use-package which-key
   :ensure t
@@ -258,6 +259,24 @@
 (use-package oceanic-theme
   :ensure t
   :defer t)
+
+(use-package ibuffer-vc
+  :ensure t
+  :config
+  (add-hook 'ibuffer-hook
+          (lambda ()
+            (message "ibuffer-hook called!")
+            (ibuffer-vc-set-filter-groups-by-vc-root)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              (ibuffer-do-sort-by-alphabetic))))
+              (setq ibuffer-formats
+                  '((mark (name 18 18 :left :elide)
+                          " "
+                          (mode 16 16 :left :elide)
+                          " "
+                          (vc-status 16 16 :left)
+                          " "
+                          filename-and-process))))
 
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
