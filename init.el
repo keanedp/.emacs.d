@@ -89,6 +89,11 @@
   :ensure t
   :defer t)
 
+(use-package rainbow-delimiters
+  :ensure t
+  :defer t
+  :hook ((clojure-mode emacs-lisp-mode lisp-mode) . rainbow-delimiters-mode))
+
 (use-package clojure-mode
   :ensure t
   :defer t
@@ -105,8 +110,7 @@
                  ("(\\(background?\\)"
                   (1 font-lock-keyword-face))))
               (define-clojure-indent (fact 1))
-              (define-clojure-indent (facts 1))
-              (rainbow-delimiters-mode))))
+              (define-clojure-indent (facts 1)))))
 
 (use-package cider
   :ensure t
@@ -277,6 +281,17 @@
                           (vc-status 16 16 :left)
                           " "
                           filename-and-process))))
+
+(use-package slime-company
+  :ensure t
+  :defer t)
+
+(use-package slime
+  :ensure t
+  :defer t
+  :init
+  (setq inferior-lisp-program "/usr/local/bin/clisp")
+  (setq slime-contribs '(slime-fancy slime-company)))
 
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")

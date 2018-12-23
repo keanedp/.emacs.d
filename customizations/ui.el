@@ -25,7 +25,7 @@
 (add-to-list 'load-path "~/.emacs.d/themes")
 (load-theme 'doom-city-lights t)
 
-(set-frame-font "Consolas")
+(set-frame-font "Inconsolata")
 
 ;; increase font size for better readability
 (set-face-attribute 'default nil :height 135 :weight 'light)
