@@ -178,6 +178,7 @@
             (show-smartparens-global-mode t)
             (add-hook 'clojure-mode-hook 'smartparens-strict-mode)
             (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
+            (add-hook 'lisp-mode-hook 'smartparens-strict-mode)
             (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
             (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
 
