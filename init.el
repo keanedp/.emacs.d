@@ -43,6 +43,8 @@
     (setq exec-path-from-shell-arguments nil)
     (exec-path-from-shell-initialize)))
 
+(setq default-directory "~/")
+
 (use-package ido-completing-read+
   :ensure t
   :config
@@ -130,8 +132,7 @@
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
-  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode)))
+  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode)))
 
 (use-package company
   :ensure t
@@ -156,6 +157,16 @@
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
+
+(use-package ruby-mode
+  :ensure t
+  :defer t
+  :mode "\\.rb\\'"
+  :mode "Rakefile\\'"
+  :mode "Gemfile\\'"
+  :mode "Berksfile\\'"
+  :mode "Vagrantfile\\'"
+  :interpreter "ruby")
 
 (use-package web-mode
   :ensure t
@@ -221,7 +232,8 @@
             (define-key smartparens-mode-map (kbd "M-B") 'sp-backward-symbol)
 
             (define-key smartparens-mode-map (kbd "C-\"") 'sp-change-inner)
-            (define-key smartparens-mode-map (kbd "M-i") 'sp-change-enclosing)))
+            (define-key smartparens-mode-map (kbd "M-i") 'sp-change-enclosing)
+            (setq-default sp-escape-quotes-after-insert nil)))
 
 ;; (use-package aggressive-indent
 ;;   :ensure t
