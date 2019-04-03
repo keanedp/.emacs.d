@@ -16,6 +16,7 @@ ido.last
 cider-history
 auto-save-list
 smex-items
+transient
 
 *~
 \#*\#

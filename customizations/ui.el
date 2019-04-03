@@ -23,7 +23,7 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'doom-city-lights t)
+(load-theme 'cyberpunk-2019 t)
 
 (set-frame-font "Inconsolata")
 

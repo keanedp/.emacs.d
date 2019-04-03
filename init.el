@@ -175,6 +175,7 @@
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-current-element-highlight t)
   (add-hook 'web-mode-hook  'my-web-mode-hook)
@@ -305,6 +306,14 @@
   :init
   (setq inferior-lisp-program "/usr/local/bin/clisp")
   (setq slime-contribs '(slime-fancy slime-company)))
+
+(use-package groovy-mode
+  :ensure t
+  :defer t)
+
+(use-package magit
+  :ensure t
+  :defer t)
 
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
