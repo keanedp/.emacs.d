@@ -34,27 +34,34 @@
 (eval-when-compile
   (require 'use-package))
 
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 ;; set env when launched as gui app
 (use-package exec-path-from-shell
   :ensure t
   :defer t
   :init
   (when (memq window-system '(mac ns))
+    (message "execing env!")
     (setq exec-path-from-shell-arguments nil)
     (exec-path-from-shell-initialize)))
 
 (setq default-directory "~/")
 
-(use-package ido-completing-read+
-  :ensure t
-  :config
-  (ido-mode t)
-  (setq ido-enable-flex-matching t)
-  (setq ido-use-filename-at-point nil)
-  (setq ido-auto-merge-work-directories-length -1)
-  (setq ido-use-virtual-buffers t)
-  (ido-ubiquitous-mode t)
-  (ido-everywhere t))
+;; (use-package ido-completing-read+
+;;   :ensure t
+;;   :config
+;;   (ido-mode t)
+;;   (setq ido-enable-flex-matching t)
+;;   (setq ido-use-filename-at-point nil)
+;;   (setq ido-auto-merge-work-directories-length -1)
+;;   (setq ido-use-virtual-buffers t)
+;;   (ido-ubiquitous-mode t)
+;;   (ido-everywhere t))
 
 (use-package smex
   :ensure t
@@ -64,12 +71,23 @@
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
+;; (use-package dired
+;;   :ensure nil
+;;   :config
+;;   (progn
+;;     (setq ls-lisp-use-insert-directory-program nil)
+;;     (require 'ls-lisp)
+;;     (setq ls-lisp-dirs-first t)
+;;     (require 'dired-x)
+;;     (setq dired-omit-mode t)
+;;     (setq-default dired-omit-files-p t) ; Buffer-local variable
+;;     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
+;;   :init
+;;   (add-hook 'dired-mode-hook 'dired-hide-details-mode))
+
 (use-package ripgrep
   :ensure t
   :defer t)
-
-;; research wgrep for better refacting
-;;(require 'wgrep)
 
 (use-package projectile
   :ensure t
@@ -318,6 +336,7 @@
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
 (load "ui.el")
+(load "ido.el")
 (load "keybindings.el")
 (load "files.el")
 

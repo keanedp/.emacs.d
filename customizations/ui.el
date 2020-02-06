@@ -23,12 +23,15 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'cyberpunk-2019 t)
+;;(load-theme 'cyberpunk-2019 t) 
+(load-theme 'oceanic t)
 
-(set-frame-font "Inconsolata")
+;;(set-frame-font "Inconsolata")
+(set-frame-font "JetBrains Mono")
 
 ;; increase font size for better readability
-(set-face-attribute 'default nil :height 135 :weight 'light)
+(set-face-attribute 'default nil :height 130 :weight 'light)
+
 ;; These settings relate to how emacs interacts with your operating system
 (setq ;; makes killing/yanking interact with the clipboard
  x-select-enable-clipboard t
