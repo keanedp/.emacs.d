@@ -23,11 +23,26 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-;;(load-theme 'cyberpunk-2019 t) 
-(load-theme 'oceanic t)
 
-;;(set-frame-font "Inconsolata")
-(set-frame-font "JetBrains Mono")
+
+;; default themes: http://ergoemacs.org/emacs/emacs_playing_with_color_theme.html
+;; old themes I liked: 'cyberpunk-2019
+
+(defconst fallback-theme 'manoj-dark)
+
+(condition-case nil
+    (if(display-graphic-p)
+      (load-theme 'oceanic t)
+      (load-theme fallback-theme))
+  (error (progn
+           (message "Can't load theme, falling back to default theme: %s" (symbol-name fallback-theme))
+           (load-theme fallback-theme))))
+
+(condition-case nil
+    (set-frame-font "JetBrains Mono")
+  (error (progn
+          (message "Font doesn't exist, falling back to Monospace!")
+          (set-frame-font "Monospace"))))
 
 ;; increase font size for better readability
 (set-face-attribute 'default nil :height 130 :weight 'light)

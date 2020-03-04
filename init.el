@@ -1,15 +1,15 @@
-;; change garbage collection threshold to 100MB
+;; Change garbage collection threshold to 100MB
 (setq gc-cons-threshold 100000000)
 
-;; increase garbage collection threshold while in minibuffer
-(defun my-minibuffer-setup-hook ()
+(defun minibuffer-setup-hook ()
   (setq gc-cons-threshold most-positive-fixnum))
 
-(defun my-minibuffer-exit-hook ()
+;; increase garbage collection threshold while in minibuffer
+(defun minibuffer-exit-hook ()
   (setq gc-cons-threshold 800000))
 
-(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
-(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+(add-hook 'minibuffer-setup-hook #'minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'minibuffer-exit-hook)
 
 (setq-default indent-tabs-mode nil)
 
@@ -34,11 +34,11 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package benchmark-init
-  :ensure t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :config
+;;   ;; To disable collection of benchmark data after init is done.
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; set env when launched as gui app
 (use-package exec-path-from-shell
@@ -52,38 +52,22 @@
 
 (setq default-directory "~/")
 
-;; (use-package ido-completing-read+
-;;   :ensure t
-;;   :config
-;;   (ido-mode t)
-;;   (setq ido-enable-flex-matching t)
-;;   (setq ido-use-filename-at-point nil)
-;;   (setq ido-auto-merge-work-directories-length -1)
-;;   (setq ido-use-virtual-buffers t)
-;;   (ido-ubiquitous-mode t)
-;;   (ido-everywhere t))
+(use-package ido-completing-read+
+  :ensure t
+  :config
+  (ido-mode 1)
+  (setq ido-enable-flex-matching 1)
+  (setq ido-use-filename-at-point nil)
+  (setq ido-auto-merge-work-directories-length -1)
+  (setq ido-use-virtual-buffers 1)
+  (ido-ubiquitous-mode 1)
+  (ido-everywhere 1))
 
 (use-package smex
   :ensure t
-  :config
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  ;; This is your old M-x.
-  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
-
-;; (use-package dired
-;;   :ensure nil
-;;   :config
-;;   (progn
-;;     (setq ls-lisp-use-insert-directory-program nil)
-;;     (require 'ls-lisp)
-;;     (setq ls-lisp-dirs-first t)
-;;     (require 'dired-x)
-;;     (setq dired-omit-mode t)
-;;     (setq-default dired-omit-files-p t) ; Buffer-local variable
-;;     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
-;;   :init
-;;   (add-hook 'dired-mode-hook 'dired-hide-details-mode))
+  :bind (("M-x" . 'smex)
+         ("M-X" . 'smex-major-mode-commands)
+         ("C-c C-c M-x" . 'execute-extended-command)))
 
 (use-package ripgrep
   :ensure t
@@ -91,19 +75,17 @@
 
 (use-package projectile
   :ensure t
-  :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-p") 'projectile-ripgrep)
-  :init
-  (projectile-mode))
+  :bind (("C-c p" . 'projectile-command-map)
+         ("C-p" . 'projectile-ripgrep))
+  :init (projectile-mode))
 
 (use-package recentf
+  :ensure t
   :config
   (setq recentf-save-file (concat user-emacs-directory ".recentf"))
-  (require 'recentf)
   (recentf-mode 1)
   (setq recentf-max-menu-items 40)
-  (global-set-key "\C-x\ \C-r" 'recentf-open-files))
+  :bind ("C-x C-r" . 'recentf-open-files))
 
 (use-package clojure-mode-extra-font-locking
   :ensure t
@@ -114,9 +96,13 @@
   :defer t
   :hook ((clojure-mode emacs-lisp-mode lisp-mode) . rainbow-delimiters-mode))
 
+(use-package paredit
+  :ensure t
+  :hook ((emacs-lisp-mode lisp-interaction-mode ielm-mode lisp-mode eval-expression-minibuffer-setup clojure-mode) . paredit-mode))
+
 (use-package clojure-mode
   :ensure t
-  :defer t
+  :mode "\\.\\(edn\\|clj\\|cljs\\)\\'"
   :config
   (add-hook 'clojure-mode-hook 'subword-mode)
   (require 'clojure-mode-extra-font-locking)
@@ -138,19 +124,12 @@
   :config
   (add-hook 'cider-mode-hook 'eldoc-mode)
   (setq cider-repl-pop-to-buffer-on-connect nil)
-  ;;(setq cider-show-error-buffer nil)
   (setq cider-stacktrace-suppressed-errors t)
-  ;;(setq cider-show-error-buffer 'only-in-repl)
   (setq cider-default-cljs-repl 'figwheel)
   (setq cider-auto-select-error-buffer t)
   (setq cider-repl-history-file "~/.emacs.d/cider-history")
   (setq cider-repl-wrap-history t)
-  (setq cider-repl-use-pretty-print t)
-  ;;(add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
-  (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
-  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode)))
+  (setq cider-repl-use-pretty-print t))
 
 (use-package company
   :ensure t
@@ -164,21 +143,8 @@
   :defer t
   :ensure t)
 
-;; auto complete html with C-j
-(use-package emmet-mode
-  :ensure t
-  :defer t)
-
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
-
 (use-package ruby-mode
   :ensure t
-  :defer t
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
   :mode "Gemfile\\'"
@@ -186,84 +152,30 @@
   :mode "Vagrantfile\\'"
   :interpreter "ruby")
 
+;; auto complete html with C-j
+(use-package emmet-mode
+  :ensure t
+  :defer t)
+
+(defun web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
+
 (use-package web-mode
   :ensure t
+  :mode "\\.\\(ts\\|html?\\|css?\\|js\\|erb\\)\\'"
   :config
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-current-element-highlight t)
-  (add-hook 'web-mode-hook  'my-web-mode-hook)
-  (add-hook 'web-mode-hook  'emmet-mode) )
-
-(use-package smartparens
-  :ensure t
-  :config (progn
-            (require 'smartparens-config)
-            (smartparens-global-mode t)
-            ;; highlight matching pairs
-            (show-smartparens-global-mode t)
-            (add-hook 'clojure-mode-hook 'smartparens-strict-mode)
-            (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
-            (add-hook 'lisp-mode-hook 'smartparens-strict-mode)
-            (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
-
-            (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
-            (define-key smartparens-mode-map (kbd "C-S-d") 'sp-beginning-of-sexp)
-            (define-key smartparens-mode-map (kbd "C-S-a") 'sp-end-of-sexp)
-
-            (define-key smartparens-mode-map (kbd "C-M-e") 'sp-up-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
-
-            (define-key smartparens-mode-map (kbd "C-M-n") 'sp-forward-hybrid-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-p") 'sp-backward-hybrid-sexp)
-
-            (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
-
-            (define-key smartparens-mode-map (kbd "M-(") 'sp-wrap-round)
-            (define-key smartparens-mode-map (kbd "M-[") 'sp-wrap-square)
-            (define-key smartparens-mode-map (kbd "M-{") 'sp-wrap-curly)
-            (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
-            (define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
-
-            (define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-slurp-sexp)
-            (define-key smartparens-mode-map (kbd "C-<left>") 'sp-forward-barf-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-<right>") 'sp-backward-barf-sexp)
-
-            (define-key smartparens-mode-map (kbd "M-D") 'sp-splice-sexp)
-            (define-key smartparens-mode-map (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
-            (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
-            (define-key smartparens-mode-map (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
-
-            (define-key smartparens-mode-map (kbd "C-]") 'sp-select-next-thing-exchange)
-            (define-key smartparens-mode-map (kbd "C-<left_bracket>") 'sp-select-previous-thing)
-            (define-key smartparens-mode-map (kbd "C-M-]") 'sp-select-next-thing)
-
-            (define-key smartparens-mode-map (kbd "M-F") 'sp-forward-symbol)
-            (define-key smartparens-mode-map (kbd "M-B") 'sp-backward-symbol)
-
-            (define-key smartparens-mode-map (kbd "C-\"") 'sp-change-inner)
-            (define-key smartparens-mode-map (kbd "M-i") 'sp-change-enclosing)
-            (setq-default sp-escape-quotes-after-insert nil)))
-
-;; (use-package aggressive-indent
-;;   :ensure t
-;;   :defer t
-;;   :hook ((clojure-mode emacs-lisp-mode css-mode) . aggressive-indent-mode))
+  :hook (emmet-mode company-web))
 
 (use-package which-key
   :ensure t
   :diminish which-key-mode
   :config
-  ;;(which-key-setup-side-window-right-bottom)
   (which-key-setup-side-window-bottom)
   (setq which-key-sort-order 'which-key-key-order-alpha)
   (setq which-key-side-window-max-width 0.33)
@@ -273,8 +185,7 @@
 
 (use-package org
   :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+  :mode "\\.org$\\'")
 
 (use-package markdown-mode
   :ensure t
@@ -329,9 +240,9 @@
   :ensure t
   :defer t)
 
-(use-package magit
+(use-package elixir-mode
   :ensure t
-  :defer t)
+  :mode "\\.\\(ex\\|exs\\)\\'")
 
 ;; personal customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
@@ -352,7 +263,3 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-;; (setq cider-cljs-lein-repl
-;;   "(do (require 'figwheel-sidecar.repl-api)
-;;        (figwheel-sidecar.repl-api/start-figwheel!)
-;;        (figwheel-sidecar.repl-api/cljs-repl))")
