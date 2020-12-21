@@ -25,11 +25,11 @@
 ;; version 27 is calling package-initialize by default as of 12/17/2018
 ;; see for details: https://github.com/jkitchin/scimax/issues/194
 (if (version<= emacs-version "27")
-  (package-initialize))
+     (package-initialize))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package))`
+  (package-install 'use-package))
 
 (eval-when-compile
   (require 'use-package))
@@ -63,10 +63,10 @@
   (ido-ubiquitous-mode 1)
   (ido-everywhere 1))
 
-(use-package smex
+(use-package amx
   :ensure t
-  :bind (("M-x" . 'smex)
-         ("M-X" . 'smex-major-mode-commands)
+  :bind (("M-x" . 'amx)
+         ("M-X" . 'amx-major-mode-commands)
          ("C-c C-c M-x" . 'execute-extended-command)))
 
 (use-package ripgrep
@@ -80,7 +80,6 @@
   :init (projectile-mode))
 
 (use-package recentf
-  :ensure t
   :config
   (setq recentf-save-file (concat user-emacs-directory ".recentf"))
   (recentf-mode 1)
@@ -144,7 +143,6 @@
   :ensure t)
 
 (use-package ruby-mode
-  :ensure t
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
   :mode "Gemfile\\'"
