@@ -11,3 +11,6 @@
 (global-set-key (kbd "C-x O") (lambda ()
                                 (interactive)
                                 (other-window -1))) ;; back one
+
+(global-set-key (kbd "<backspace>")
+                '(lambda () (interactive) (backward-delete-char-untabify 1 nil)))
