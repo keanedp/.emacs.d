@@ -85,6 +85,9 @@
 ;;   :init
 ;;   (add-hook 'dired-mode-hook 'dired-hide-details-mode))
 
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
 (use-package ripgrep
   :ensure t
   :defer t)
@@ -177,7 +180,6 @@
   (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
 
 (use-package ruby-mode
-  :ensure t
   :defer t
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
