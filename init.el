@@ -74,6 +74,9 @@
          ("M-X" . 'amx-major-mode-commands)
          ("C-c C-c M-x" . 'execute-extended-command)))
 
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
 (use-package ripgrep
   :ensure t
   :defer t)
@@ -166,6 +169,15 @@
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
+
+(use-package ruby-mode
+  :defer t
+  :mode "\\.rb\\'"
+  :mode "Rakefile\\'"
+  :mode "Gemfile\\'"
+  :mode "Berksfile\\'"
+  :mode "Vagrantfile\\'"
+  :interpreter "ruby")
 
 (use-package web-mode
   :ensure t
