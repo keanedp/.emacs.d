@@ -13,14 +13,19 @@
 
 (setq-default indent-tabs-mode nil)
 
+;; fix package update issues
+(custom-set-variables
+ '(gnutls-algorithm-priority "normal:-vers-tls1.3"))
+
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("gnu" . "http://elpa.gnu.org/packages/") t)
+             '("gnu" . "https://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;(add-to-list 'package-archives
+;             '("melpa-stable" . "https://stable.melpa.org/packages/") t
+;)
 
 ;; version 27 is calling package-initialize by default as of 12/17/2018
 ;; see for details: https://github.com/jkitchin/scimax/issues/194
